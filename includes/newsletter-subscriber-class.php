@@ -20,7 +20,37 @@ class Newsletter_Subscriber_Widget extends WP_Widget {
 	 * @param array $instance
 	 */
 	public function widget( $args, $instance ) {
-		// outputs the content of the widget
+        // outputs the content of the widget
+        echo $args['before_widget'];
+
+        echo $args['before_title'];
+        if(!empty($instance['title'])){
+            echo $instance['title'];
+        }
+            
+        echo $args['after_title'];
+        ?>
+        <div id="form-msg"></div>
+        <form method="post" action="<?php echo plugins_url(). '/newsletter-subscriber/includes/newsletter-subscriber-mailer.php'; ?>" id="subscriber-form">
+            <div class="form-group">
+                <label for="name">Name: </label>
+                <input type="text" id="name" name="name" class="form-control" required>
+            </div>
+            <br>
+            <div class="form-group">
+                <label for="email">Email: </label>
+                <input type="text" id="email" name="email" class="form-control" required>
+            </div>
+            <br>
+            <input type="hidden" name="recipient" value="<?php echo $instance['recipient']; ?>">
+            <input type="hidden" name="subject" value="<?php echo $instance['subject']; ?>">
+            <input type="submit" class="btn btn-primary" name="subscriber_submit" value="Subscribe">
+    
+        </form>
+        
+        <?php
+
+        echo $args['after_widget'];
 	}
 
 	/**
