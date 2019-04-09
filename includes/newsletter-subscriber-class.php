@@ -31,8 +31,8 @@ class Newsletter_Subscriber_Widget extends WP_Widget {
 	public function form( $instance ) {
         // outputs the options form on admin
         $title = !empty($instance['title']) ? $instance['title'] : __('Newsletter Subscriber', 'ns_domain');
-        $recipient = $instance['recipeint'];
-        $subject = !empty($instance['subject']) ? $instance['subscriber'] : __('You have a new subscriber', 'ns_domain');
+        $recipient = $instance['recipient'];
+        $subject = !empty($instance['subject']) ? $instance['subject'] : __('You have a new subscriber', 'ns_domain');
         ?>
 
         <p>
@@ -62,6 +62,14 @@ class Newsletter_Subscriber_Widget extends WP_Widget {
 	 * @return array
 	 */
 	public function update( $new_instance, $old_instance ) {
-		// processes widget options to be saved
+        // processes widget options to be saved
+        
+        $instance = array(
+            'title' => (!empty($new_instance['title'])) ? strip_tags($new_instance['title']) : '',
+            'recipient' => (!empty($new_instance['recipient'])) ? strip_tags($new_instance['recipient']) : '',
+            'subject' => (!empty($new_instance['subject'])) ? strip_tags($new_instance['subject']) : '',
+        );
+
+        return $instance;
 	}
 }
